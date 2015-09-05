@@ -1,0 +1,28 @@
+
+pg_stat_statements2
+===================
+
+About
+-----
+
+pg_stat_statements2 is a pg_stat_statement-derivative from PostgreSQL
+9.4.4.
+
+This module has two modifications from the original pg_stat_statements
+to work with the sql_firewall extension at the same time.
+
+ 1. Name of the extension has been changed to 'pg_stat_statements2' to
+    resolve the name conflict even if you already have
+    pg_stat_statements.
+
+ 2. Query Id is calculated using relation names instead of relation
+    ids which is done by the original pg_stat_statements. So, Query Id
+    can keep the same value even if the table get re-created (drop &
+    create).
+
+Authors
+-------
+
+Satoshi Nagayasu <snaga@uptime.jp>
+
+EOF
