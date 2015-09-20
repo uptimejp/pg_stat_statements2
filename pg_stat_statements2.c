@@ -217,6 +217,8 @@ typedef struct pgssJumbleState
 	int			clocations_count;
 } pgssJumbleState;
 
+extern void JumbleQuery(pgssJumbleState *jstate, Query *query);
+
 /*---- Local variables ----*/
 
 /* Current nesting depth of ExecutorRun+ProcessUtility calls */
@@ -313,12 +315,13 @@ static char *qtext_fetch(Size query_offset, int query_len,
 static bool need_gc_qtexts(void);
 static void gc_qtexts(void);
 static void entry_reset(void);
+#ifdef NOT_USED
 static void AppendJumble(pgssJumbleState *jstate,
 			 const unsigned char *item, Size size);
-static void JumbleQuery(pgssJumbleState *jstate, Query *query);
 static void JumbleRangeTable(pgssJumbleState *jstate, List *rtable);
 static void JumbleExpr(pgssJumbleState *jstate, Node *node);
 static void RecordConstLocation(pgssJumbleState *jstate, int location);
+#endif /* NOT_USED */
 static char *generate_normalized_query(pgssJumbleState *jstate, const char *query,
 						  int *query_len_p, int encoding);
 static void fill_in_constant_lengths(pgssJumbleState *jstate, const char *query);
@@ -2136,6 +2139,7 @@ done:
 	LWLockRelease(pgss->lock);
 }
 
+#ifdef NOT_USED
 /*
  * AppendJumble: Append a value that is substantive in a given query to
  * the current jumble.
@@ -2693,6 +2697,8 @@ RecordConstLocation(pgssJumbleState *jstate, int location)
 		jstate->clocations_count++;
 	}
 }
+
+#endif /* NOT_USED */
 
 /*
  * Generate a normalized version of the query string that will be used to

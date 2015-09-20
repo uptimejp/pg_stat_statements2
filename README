@@ -15,10 +15,15 @@ to work with the sql_firewall extension at the same time.
     resolve the name conflict even if you already have
     pg_stat_statements.
 
- 2. Query Id is calculated using relation names instead of relation
-    ids which is done by the original pg_stat_statements. So, Query Id
-    can keep the same value even if the table get re-created (drop &
-    create).
+ 2. JumbleQuery() function is removed from this module, and
+    pgss_post_parse_analyze() calls JumbleQuery() in the sql_firewall
+    module (shared library).
+
+    So, this module must be used with the sql_firewall module, and it
+    needs to be loaded prior to the pg_stat_statements2 as following:
+
+      shared_preload_libraries = 'sql_firewall,pg_stat_statements2'
+
 
 Authors
 -------
